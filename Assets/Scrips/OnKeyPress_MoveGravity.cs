@@ -11,8 +11,8 @@ public class OnKeyPress_MoveGravity : MonoBehaviour {
 	float vx = 0;
 	bool leftFlag = false; // 左向きかどうか
 	bool pushFlag = false; // スペースキーを押しっぱなしかどうか
-	bool jumpFlag = false; // ジャンプ状態かどうか
-	bool groundFlag = false; // 足が何かに触れているかどうか
+	public bool jumpFlag = false; // ジャンプ状態かどうか
+    public bool groundFlag = false; // 足が何かに触れているかどうか
 	Rigidbody2D rbody;
 
 	void Start () { // 最初に行う
@@ -45,7 +45,7 @@ public class OnKeyPress_MoveGravity : MonoBehaviour {
         }
 
         // もし、スペースキーが押されたとき、足が何かに触れていたら
-        if ((Input.GetKey("space") || Input.GetKey("joystick button 0"))&& groundFlag) { 
+        if ((Input.GetKey("space") && groundFlag || Input.GetKey("joystick button 2"))&& groundFlag) { 
 			if (pushFlag == false) { // 押しっぱなし出なければ
 				jumpFlag = true; // ジャンプの準備
 				pushFlag = true; // 押しっぱなし状態

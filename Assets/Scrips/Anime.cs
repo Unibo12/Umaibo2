@@ -5,6 +5,7 @@ using UnityEngine;
 // キーを押すと、アニメーションを切り換える
 public class Anime : MonoBehaviour
 {
+    public OnKeyPress_MoveGravity onKeyPress_MoveGravity;
 
     public string upAnime = "";     // 上向き：Inspectorで指定
     public string downAnime = "";   // 下向き：Inspectorで指定
@@ -14,6 +15,8 @@ public class Anime : MonoBehaviour
     public string HijiAnime = "";   // 肘打ち：Inspectorで指定
     public string DosukoiAnime = "";// どすこい張り手：Inspectorで指定
     public string ThrowAnime = "";  // まいぼうるもどき投げ：Inspectorで指定
+    public string JumpShagamiAnime = "";// ジャンプ時しゃがみ：Inspectorで指定
+    public string JumpAnime = "";   // ジャンプ時：Inspectorで指定
 
     bool HijiFlg = true;            // 肘ボタン押しっぱなしで連打不可にしようとしたが未実装
     bool DosukoiFlg = true;         // どすこいも同様
@@ -80,16 +83,36 @@ public class Anime : MonoBehaviour
             }
         }
 
-        // Xbox360コン X　まいぼうるもどき投げ
-        if ((Input.GetKey("a") || Input.GetKey("joystick button 3")))
+        // Xbox360コン Y　まいぼうるもどき投げ
+        if ((Input.GetKey("s") || Input.GetKey("joystick button 3")))
         {
             nowMode = ThrowAnime;
         }
 
+        // Xbox360コン X ジャンプ　
+        if ((Input.GetKey("a") || Input.GetKey("joystick button 2")))
+        {
+            nowMode = JumpAnime;
+        }
+
+        if (!onKeyPress_MoveGravity.groundFlag)
+        {
+            nowMode = JumpAnime;
+        }
+        
 
     }
     void FixedUpdate()
     { // ずっと行う（一定時間ごとに）
+
+        //if (oldMode == JumpShagamiAnime)
+        //{
+        //    oldMode = nowMode;
+        //    // アニメを切り換える
+        //    Animator animator = this.GetComponent<Animator>();
+        //    animator.Play(JumpAnime);
+        //}
+
       // もし違うキーが押されたら
         if (nowMode != oldMode)
         {
